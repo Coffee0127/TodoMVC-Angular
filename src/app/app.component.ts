@@ -22,4 +22,8 @@ export class AppComponent {
     });
     item.value = '';
   }
+
+  clearCompleted() {
+    this.todos = this.todos.filter(v => !v.done);
+  }
 }

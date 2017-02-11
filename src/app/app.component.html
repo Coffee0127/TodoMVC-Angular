@@ -22,7 +22,7 @@
       </li>
     </ul>
   </section>
-  <app-footer [footerTodos]="todos"></app-footer>
+  <app-footer [footerTodos]="todos" (clearCompleted)="clearCompleted()"></app-footer>
 </section>
 <footer class="info">
   <p>Double-click to edit a todo</p>
