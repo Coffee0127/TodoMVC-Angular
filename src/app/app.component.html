@@ -22,9 +22,11 @@
       </li>
     </ul>
   </section>
-  <app-footer [footerTodos]="todos" (clearCompleted)="clearCompleted()"></app-footer>
+  <app-footer #myFooter [footerTodos]="todos" (clearCompleted)="clearCompleted()"></app-footer>
+  目前 todos 筆數: {{ myFooter.todos.length }}
 </section>
 <footer class="info">
+  <button type="button" (click)="myFooter.btnClear()">清除已完成</button>
   <p>Double-click to edit a todo</p>
   <!-- Remove the below line ↓ -->
   <p>Template by <a href="http://sindresorhus.com">Sindre Sorhus</a></p>
