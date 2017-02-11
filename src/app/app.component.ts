@@ -50,4 +50,9 @@ export class AppComponent implements OnInit {
     // 因此要給予一個全新的陣列
     this.todos = [...this.todos];
   }
+
+  updateTodo(item, label: HTMLLabelElement) {
+    item.value = label.innerHTML;
+    label.contentEditable = 'false';
+  }
 }

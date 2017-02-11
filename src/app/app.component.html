@@ -15,7 +15,13 @@
       <li *ngFor="let item of (todos | filter:myFooter.filter_type)" [ngClass]="{completed: item.done}">
         <div class="view">
           <input class="toggle" type="checkbox" [(ngModel)]="item.done">
-          <label>{{item.value|uppercase}}</label>
+            <!--
+              prevent new line in contentEditable
+            (keypress)="$event.which != 13"
+            -->
+          <label (dblclick)="$event.target.contentEditable = 'true'"
+            (keypress)="$event.which != 13"
+            (keyup.enter)="updateTodo(item, $event.target)">{{item.value|uppercase}}</label>
           <button class="destroy" (click)="remove(item)"></button>
         </div>
         <input class="edit" value="Rule the web">
