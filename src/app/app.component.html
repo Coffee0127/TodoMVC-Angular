@@ -7,7 +7,7 @@
   </header>
   <!-- This section should be hidden by default and shown when there are todos -->
   <section class="main" *ngIf="todos.length != 0">
-    <input class="toggle-all" type="checkbox">
+    <input class="toggle-all" type="checkbox" (change)="toggleAll($event.target.checked)">
     <label for="toggle-all">Mark all as complete</label>
     <ul class="todo-list">
       <!-- These are here just to show the structure of the list items -->
@@ -16,7 +16,7 @@
         <div class="view">
           <input class="toggle" type="checkbox" [(ngModel)]="item.done">
           <label>{{item.value|uppercase}}</label>
-          <button class="destroy"></button>
+          <button class="destroy" (click)="remove(item)"></button>
         </div>
         <input class="edit" value="Rule the web">
       </li>
