@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
-import { Http } from '@angular/http';
+import { Component, OnInit } from '@angular/core';
+import { Http, Headers, RequestOptions } from '@angular/http';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   inputHint: string = 'What needs to be done?';
 
@@ -17,6 +17,18 @@ export class AppComponent {
   todo: string;
 
   constructor(private http: Http) {
+  }
+
+  ngOnInit() {
+    let body = this.todos;
+    let headers = new Headers({
+      Authorization: 'token 46c6fab0-2015-4988-ab4c-b8072ab22fd7'
+    });
+    let options = new RequestOptions({ headers: headers });
+    this.http.get('/me/todos-angular', options)
+      .subscribe(res => {
+        this.todos = res.json();
+      });
   }
 
   addTodo(item: HTMLInputElement) {
@@ -43,5 +55,16 @@ export class AppComponent {
     this.todos.splice(index, 1);
     // 因此要給予一個全新的陣列
     this.todos = [...this.todos];
+  }
+
+  save() {
+    let body = this.todos;
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      Authorization: 'token 46c6fab0-2015-4988-ab4c-b8072ab22fd7'
+    });
+    let options = new RequestOptions({ headers: headers });
+    this.http.post('/me/todos-angular', body, options)
+      .subscribe();
   }
 }
