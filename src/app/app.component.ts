@@ -15,8 +15,11 @@ export class AppComponent {
 
   todo: string;
 
-  addTodo(todo: HTMLInputElement) {
-    this.todos.push(todo.value);
-    todo.value = '';
+  addTodo(item: HTMLInputElement) {
+    this.todos.push({
+      value: item.value,
+      done: false
+    });
+    item.value = '';
   }
 }
