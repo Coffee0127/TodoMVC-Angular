@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from './data.service';
 
+import { Observable, Subscription } from 'rxjs/Rx';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -43,6 +45,32 @@ export class AppComponent implements OnInit {
     });
   }
 
+  private labelMap: Map<HTMLLabelElement, Subscription> = new Map();
+
+  edit(item, label: HTMLLabelElement) {
+    if (!JSON.parse(label.getAttribute('data-editing'))) {
+      label.setAttribute('data-editing', 'true');
+      label.contentEditable = 'true'
+      label.focus();
+      var textNode = label.firstChild;
+      var caret = textNode.textContent.length;
+      var range = document.createRange();
+      range.setStart(textNode, caret);
+      range.setEnd(textNode, caret);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+
+      let input$ = Observable.fromEvent(label, 'input').debounceTime(1000);
+      let sub$ = input$.subscribe(v => {
+        item.value = label.innerHTML.toUpperCase();
+        // TODO update one item only
+        this.dataService.save(this.todos);
+      });
+      this.labelMap.set(label, sub$);
+    }
+  }
+
   remove(item) {
     // Angular2 使用 splice 會有問題 ==> 所指向的陣列位置沒有改變，因此不會執行變更偵測
     let index = this.todos.indexOf(item);
@@ -53,6 +81,8 @@ export class AppComponent implements OnInit {
 
   updateTodo(item, label: HTMLLabelElement) {
     item.value = label.innerHTML;
+    label.setAttribute('data-editing', 'false');
     label.contentEditable = 'false';
+    this.labelMap.get(label).unsubscribe();
   }
 }

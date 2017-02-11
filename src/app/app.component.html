@@ -19,7 +19,7 @@
               prevent new line in contentEditable
             (keypress)="$event.which != 13"
             -->
-          <label (dblclick)="$event.target.contentEditable = 'true'"
+          <label (dblclick)="edit(item, $event.target)" data-editing="false"
             (keypress)="$event.which != 13"
             (keyup.enter)="updateTodo(item, $event.target)">{{item.value|uppercase}}</label>
           <button class="destroy" (click)="remove(item)"></button>
