@@ -16,11 +16,13 @@ export class AppComponent {
   todo: string;
 
   addTodo(item: HTMLInputElement) {
-    this.todos.push({
-      value: item.value,
-      done: false
-    });
-    item.value = '';
+    if (item.value) {
+      this.todos.push({
+        value: item.value,
+        done: false
+      });
+      item.value = '';
+    }
   }
 
   clearCompleted() {
