@@ -6,4 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  inputHint: string = 'What needs to be done?';
 }
