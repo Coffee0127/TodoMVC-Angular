@@ -7,6 +7,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
+  filter_type: string = 'All';
+
   toomuch = false;
 
   private _todos: any[];
